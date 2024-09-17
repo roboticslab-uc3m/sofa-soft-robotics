@@ -1,0 +1,8 @@
+
+--- NEW SESSION: 30/07/2024 18:03:04 ---
+/cableNode/cosserat.time = 47.99
+
+--- NEW SESSION: 30/08/2024 15:57:54 ---
+/finger/femPoints/pointsInFEM.showColor = 1 1 1 1
+/cableNode/cosserat/rigidBase/cosseratInSofaFrameNode/slidingPoint/MappedPoints/QPConstraint.color = 0.4 0.4 0.4 1
+/cableNode/cosserat/rigidBase/cosseratInSofaFrameNode/slidingPoint/MappedPoints/FramesMO.showColor = 1 1 1 1

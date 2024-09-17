@@ -1,0 +1,48 @@
+
+--- NEW SESSION: 02/07/2024 14:48:38 ---
+/goal/goalMO.showColor = 1 1 1 1
+/finger/fingertip/dd.constraint = Constraint ID : 2  dof ID : 0  value : 1 0 0  
+Constraint ID : 3  dof ID : 0  value : 0 1 0  
+Constraint ID : 4  dof ID : 0  value : 0 0 1  
+
+/finger/fingertip/dd.showColor = 1 1 1 1
+
+--- NEW SESSION: 02/07/2024 14:59:04 ---
+/finger/tetras.showColor = 1 1 1 1
+
+--- NEW SESSION: 03/07/2024 13:00:07 ---
+/goal/goalMO.showIndices = 0
+/goal/goalMO.showColor = 0.258824 1 0.305882 1
+/goal/goalMO.drawMode = 1
+/goal/trajectories_309.PositionsColor = 1 1 0 1
+/goal/trajectories_309.ForcesColor = 1 1 0 1
+/goal/trajectories_309.VelocitiesColor = 1 1 0 1
+/goal/trajectories_309.TrajectoriesColor = 1 1 0 1
+/finger/position_fingertip.PositionsColor = 1 1 0 1
+/finger/position_fingertip.TrajectoriesColor = 1 1 0 1
+/finger/position_fingertip.VelocitiesColor = 1 1 0 1
+/finger/position_fingertip.ForcesColor = 1 1 0 1
+
+--- NEW SESSION: 03/07/2024 13:15:32 ---
+/finger/cables/MechanicalObject.showColor = 1 1 1 1
+
+--- NEW SESSION: 03/07/2024 13:19:14 ---
+/finger/fingertip/dd.showColor = 1 1 1 1
+
+--- NEW SESSION: 12/09/2024 08:00:52 ---
+/goal/goalMO.showColor = 1 1 1 1
+/finger/fingertip/dd.constraint = Constraint ID : 2  dof ID : 0  value : 1 0 0  
+Constraint ID : 3  dof ID : 0  value : 0 1 0  
+Constraint ID : 4  dof ID : 0  value : 0 0 1  
+
+/finger/fingertip/dd.showColor = 1 1 1 1
+
+--- NEW SESSION: 17/09/2024 13:55:27 ---
+/finger/cables/cable_motor_1.cableLength = 47.4639
+/finger/cables/cable_motor_1.force = 1313.2
+/finger/cables/cable_motor_1.displacement = 6.5
+/finger/cables/cable_motor_1.color = 0.4 0.4 0.4 1
+/finger/cables/MechanicalObject.constraint = Constraint ID : 0  dof ID : 0  value : -0.537593 0.205264 0.213085    dof ID : 1  value : 0.0125253 -0.00136414 0.0112243    dof ID : 2  value : -0.0635671 -0.996 -0.0627964  
+Constraint ID : 1  dof ID : 4  value : -0.0124791 -0.000292478 0.0379824    dof ID : 5  value : 0.0173279 -0.00240191 0.0247059    dof ID : 6  value : -0.0656209 -0.995435 -0.0692985  
+
+/finger/cables/MechanicalObject.showColor = 1 1 1 1
