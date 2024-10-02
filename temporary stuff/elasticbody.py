@@ -17,7 +17,7 @@ def ElasticBody(name="ElasticBody", rotation=[0, 0, 0], translation=[0, 0, 0], c
                               name='loader',
                               rotation=rotation,
                               translation=translation,
-                              filename='mesh/ankle.vtk')
+                              filename='ankle.vtk')
     
     print("-------------------------",mechanicalmodel.loader.filename.value)
     mechanicalmodel.addObject('MeshTopology',
@@ -44,7 +44,7 @@ def ElasticBody(name="ElasticBody", rotation=[0, 0, 0], translation=[0, 0, 0], c
     # Specific loader for the visual model
     visualmodel.addObject('MeshSTLLoader',
                           name='loader',
-                          filename='mesh/ankle.stl',
+                          filename='ankle.stl',
                           rotation=rotation,
                           translation=translation)
     visualmodel.addObject('OglModel',

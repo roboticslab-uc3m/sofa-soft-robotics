@@ -1,0 +1,11 @@
+{
+    "volumeMeshFileName": "ankle.vtk",
+    "poissonRatio": 0.3,
+    "youngModulus": 18000,
+    "totalMass": 1.0,
+    "surfaceColor": [0.0, 0.8, 0.7, 1.0],
+    "surfaceMeshFileName": "ankle.stl",
+    "rotation": [0.0, 45.0, 0.0],
+    "translation": [0.0, 0.0, 0.0],
+    "scale": [10.0, 10.0, 10.0]
+}
