@@ -29,7 +29,7 @@ class AnkleController(Sofa.Core.Controller):
         self.realPosition=np.array(self.endeffector.position.value)[0]
         self.rate=10
         self.name = "AnkleController"
-        self.start_conection()
+        # self.start_conection()
         
     def start_conection(self):
         print("Esperando conexión de MATLAB...")
@@ -48,17 +48,17 @@ class AnkleController(Sofa.Core.Controller):
         print(f"Acciones de control recibidas: {controlSignal}")
         return controlSignal["actuadores"]
     
-    def onAnimateBeginEvent(self, event): # called at each begin of animation step
-        self.t=self.t+self.dts
-        self.realPosition=np.array(self.endeffector.position.value)[0]
-        self.send(self.realPosition.tolist())
-        self.error=self.receive()
-        print(type(self.error),"-----------------------------------------------------------")
-        if self.error[0]!=0:
-            self.pitch(self.error[0])
+    # def onAnimateBeginEvent(self, event): # called at each begin of animation step
+    #     self.t=self.t+self.dts
+    #     self.realPosition=np.array(self.endeffector.position.value)[0]
+    #     self.send(self.realPosition.tolist())
+    #     self.error=self.receive()
+    #     print(type(self.error),"-----------------------------------------------------------")
+    #     if self.error[0]!=0:
+    #         self.pitch(self.error[0])
 
-        if self.error[2]!=0:
-            self.roll(self.error[2])
+    #     if self.error[2]!=0:
+    #         self.roll(self.error[2])
     def pitch(self,value):#turn axe x
         displacement = self.cable.CableConstraint.value[0]
         displacement2 = self.cable2.CableConstraint.value[0]
@@ -136,7 +136,7 @@ def Ankle(parentNode=None, name="Ankle",
                                     surfaceMeshFileName="ankle.stl",
                                     rotation=rotation,
                                     translation=translation,
-                                    scale=[10.0, 10.0, 10.0])
+                                    scale=[1.0, 1.0, 1.0])
     
     Ankle.addChild(femAnkle)
     FixedBox(femAnkle,
@@ -144,7 +144,7 @@ def Ankle(parentNode=None, name="Ankle",
              atPositions=fixingBox)
     cable =femAnkle.addChild("cable")
     cables=[]
-    cables.append(PullingCable(cable, valueType="force",name="cable1",cableGeometry=loadPointListFromFile("/config/cable1.json")))
+    cables.append(PullingCable(cable, valueType="force",name="cable1",cableGeometry=loadPointListFromFile("cable1.json")))
     cables.append(PullingCable(cable, valueType="force",name="cable2", cableGeometry=loadPointListFromFile("cable2.json")))
     cables.append(PullingCable(cable, valueType="force",name="cable3", cableGeometry=loadPointListFromFile("cable3.json")))
     cables.append(PullingCable(cable, valueType="force",name="cable4", cableGeometry=loadPointListFromFile("cable4.json")))

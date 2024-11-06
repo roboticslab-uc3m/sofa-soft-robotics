@@ -1,0 +1,8 @@
+# Ignore .vscode folders in any subdirectory
+**/.vscode
+
+# Ignore __pycache__ folders in any subdirectory
+**/__pycache__
+
+# Ignore all .log files in any subdirectory
+**/*.log
