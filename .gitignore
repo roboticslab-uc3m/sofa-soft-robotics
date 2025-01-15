@@ -3,6 +3,11 @@
 
 # Ignore __pycache__ folders in any subdirectory
 **/__pycache__
+**/temporary stuff
+
 
 # Ignore all .log files in any subdirectory
 **/*.log
+
+**/cambios_ficheros_SOFA
+
