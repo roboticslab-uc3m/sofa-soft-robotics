@@ -2,6 +2,7 @@
 import Sofa.Core
 from splib3.animation import animate, AnimationManager
 from stlib3.visuals import VisualModel
+import Sofa.constants.Key as Key
 
 from stlib3.physics.constraints import FixedBox
 from softrobots.actuators import PullingCable
@@ -17,7 +18,7 @@ data = json.loads(open("../config/Finger_LQ.json").read())
 cable1_data = json.loads(open("../config/cable1.json").read())
 cable2_data = json.loads(open("../config/cable2.json").read())
 
-from Finger_Controller import FingerController
+# from Finger_Controller import FingerController
 
 
 #This is the goal
@@ -81,8 +82,9 @@ class Finger:
         self.node.addObject('RestShapeSpringsForceField', points=self.node.roi.indices.getLinkPath(), stiffness=1e12)
         
         # Add the cable and collision models to the platform
-        self.__addCables()
         self.addCollisionModel(surfaceMeshFileNameTop, surfaceMeshFileNameBot, rotation, translation, scale)
+
+        self.__addCables()
     
     def __addCables(self):
 
@@ -93,18 +95,19 @@ class Finger:
         #  This creates a MechanicalObject, a component holding the degree of freedom of our
         # mechanical modelling. In the case of a cable it is a set of positions specifying
         #  the points where the cable is passing by.
-        cable1.addObject('MechanicalObject', name='cable1', position=cable1_data)
+        # cable1.addObject('MechanicalObject', name='cable1', position=cable1_data)
         cable2.addObject('MechanicalObject', name='cable2', position=cable2_data)
            
         # Create a CableConstraint object with a name.
         # the indices are referring to the MechanicalObject's positions.
         # The last index is where the pullPoint is connected.
-        cable1.addObject('CableConstraint' if not self.inverseMode else 'CableActuator', template='Vec3', name="acableConstraint",
-                        indices=list(range(0, 14)),
-                        pullPoint=[-10.392, 0, 6],
-                        maxPositiveDisp=0.1,
-                        maxDispVariation=0.05,
-                        minForce=0)
+        # cable1.addObject('CableConstraint' if not self.inverseMode else 'CableActuator', template='Vec3', name="acableConstraint",
+        #                 indices=list(range(0, 14)),
+        #                 pullPoint=[-10.392, 0, 6],
+        #                 # maxPositiveDisp=0.1,
+        #                 maxDispVariation=0.05,
+        #                 minForce=0)
+        
         cable2.addObject('CableConstraint' if not self.inverseMode else 'CableActuator', template='Vec3', name="aCableActuator",
                         indices=list(range(0, 14)), #all are 30
                         # indices=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
@@ -115,17 +118,39 @@ class Finger:
                         #[0, -5, 6]
                         )
 
+
+
+
+        # cable1.addObject('CableConstraint', template='Vec3', name="acableConstraint",
+        #                 indices=list(range(0, 14)),
+        #                 pullPoint=[-10.392, 0, 6],
+        #                 # maxPositiveDisp=0.1,
+        #                 # maxDispVariation=0.05,
+        #                 minForce=0)
+        
+        # cable2.addObject('CableConstraint' , template='Vec3', name="aCableActuator",
+        #                 indices=list(range(0, 14)), #all are 30
+        #                 # indices=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        #                 minForce=0,  # Set that the cable can't push
+        #                 maxPositiveDisp=0.1,
+        #                 maxDispVariation=0.05,
+        #                 pullPoint=[10.392, 0, 6]
+        #                 #[0, -5, 6]
+        #                 )
+
+
         # This creates a BarycentricMapping. A BarycentricMapping is a key element as it will create a bidirectional link
         #  between the cable's DoFs and the finger's one's so that movements of the cable's DoFs will be mapped
         #  to the finger and vice-versa;
-        cable1.addObject('BarycentricMapping')
+        # cable1.addObject('BarycentricMapping')
         cable2.addObject('BarycentricMapping')
 
-        # This creates a PythonScriptController that permits to programmatically implement new behavior
-        #  or interactions using the Python programming language. The controller is referring to a
-        #  file named "controller.py".
-        # cable1.addObject(FingerController(name="FingerController", node=cable1))
-        # cable2.addObject(FingerController(name="FingerController", node=cable2))
+        # cable1.addObject(FingerController(cable1, name="FingerController"))
+        # if not self.inverseMode:
+        #     # This creates a PullingCable component. This component will apply a force to the cable's DoFs
+        #     #  to pull the cable toward the pullPoint.0
+        # cable1.addObject(FingerController("FingerController",cable1))
+        
 
     def addVisualModel(self, surfaceMeshFileName, color=[1., 1., 1., 1.]):
         fingerVisu = self.node.addChild('VisualModel')
@@ -151,8 +176,38 @@ class Finger:
         effectors.addObject('MechanicalObject', position=position)
 
         #PositionEffector is a component from the Inverse.SoftRobots plugin -> https://project.inria.fr/softrobot/documentation/constraint/position-effector/
-        effectors.addObject('PositionEffector', indices=0, template = 'Vec3', effectorGoal=target)
+        effectors.addObject('PositionEffector', indices=0, template = 'Vec3', effectorGoal=target, useDirections=[1, 1, 1])
         effectors.addObject('BarycentricMapping', mapForces=False, mapMasses=False)
+
+
+class FingerController(Sofa.Core.Controller):
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Sofa.Core.Controller.__init__(self, args, kwargs)
+        # self.cable = cable
+
+        self.cable = args[1]
+        # self.cable2 = args[0][1]
+        self.name = args[0]
+
+    def onKeypressedEvent(self, e):
+        displacement = self.cable.acableConstraint.value[0]
+        # displacement2 = self.cable2.CableConstraint.value[0]
+        if e["key"] == Key.plus:
+            
+            displacement += 1.
+            print(displacement)
+            # displacement2 -= 5.
+            # if displacement2 < 0:
+            #     displacement2 = 0
+
+        elif e["key"] == Key.minus:
+            displacement -= 1.
+            # displacement2 += 5.
+            if displacement < 0:
+                displacement = 0
+        self.cable.acableConstraint.value = [displacement]
+        # self.cable2.CableConstraint.value = [displacement2]
 
 
 def createScene(rootNode):
@@ -169,7 +224,9 @@ def createScene(rootNode):
     rootNode.addObject('DefaultPipeline', name='CollisionPipeline')
     rootNode.addObject('BruteForceBroadPhase', name='BroadPhase')
     rootNode.addObject('BVHNarrowPhase', name='NarrowPhase')
-    rootNode.addObject('DefaultContactManager', name='ContactManager', response='FrictionContactConstraint')
+    # rootNode.addObject('DefaultContactManager', name='ContactManager', response='FrictionContactConstraint')
+    rootNode.addObject('RuleBasedContactManager', responseParams="mu="+str(1e10),
+                                                    name='Response', response='FrictionContactConstraint')
     # rootNode.addObject('DefaultCollisionGroupManager', name='GroupManager')
     rootNode.addObject('LocalMinDistance', name='Proximity', alarmDistance=10, contactDistance=4)
 
@@ -207,7 +264,7 @@ def createScene(rootNode):
     if inverseMode:
         # For inverse resolution, i.e control of effectors position
         rootNode.addObject('RequiredPlugin', name='SoftRobots.Inverse')
-        rootNode.addObject('QPInverseProblemSolver', epsilon=1e-1)
+        rootNode.addObject('QPInverseProblemSolver', hessianType='HST_INDEF')
     else:
         # For direct resolution, i.e direct control of the cable displacement
         rootNode.addObject('GenericConstraintSolver', maxIterations=100, tolerance=1e-5)
@@ -218,8 +275,8 @@ def createScene(rootNode):
     simulation.addObject('SparseLDLSolver', name='precond')
     simulation.addObject('GenericConstraintCorrection')
 
-    finger = Finger(simulation, inverseMode=True,
-                                volumeMeshFileName="../models/" + data["volumeMeshFileName"],
+    finger = Finger(simulation, inverseMode=inverseMode,
+                                volumeMeshFileName="../models/Low_quality_collision_mesh/" + data["volumeMeshFileName"],
                                 poissonRatio=data["poissonRatio"],
                                 youngModulus=data["youngModulus"],
                                 totalMass=data["totalMass"],

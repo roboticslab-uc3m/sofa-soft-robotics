@@ -9,6 +9,7 @@
     "translation": [0.0, 0.0, 0.0],
     "scale": [1.0, 1.0, 1.0],
     "fixingBox":[-30, -10, -30, 30, 5, 30],
-    "CollisionMeshTop": "Collision_top_full.stl",
-    "CollisionMeshBot": "Collision_bot_full.stl"
+    "CollisionMeshTop": "Finger_v2_Collision_Top_v2.stl",
+    "CollisionMeshBot": "Finger_v2_Collision_Bot_v2.stl"
 }
+

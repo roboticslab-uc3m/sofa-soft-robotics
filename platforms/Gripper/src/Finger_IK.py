@@ -32,7 +32,9 @@ def createScene(rootNode):
     rootNode.addObject('DefaultPipeline', name='CollisionPipeline')
     rootNode.addObject('BruteForceBroadPhase', name='BroadPhase')
     rootNode.addObject('BVHNarrowPhase', name='NarrowPhase')
-    rootNode.addObject('DefaultContactManager', name='ContactManager', response='FrictionContactConstraint')
+    # rootNode.addObject('DefaultContactManager', name='ContactManager', response='FrictionContactConstraint')
+    rootNode.addObject('RuleBasedContactManager', responseParams="mu="+str(1e10),
+                                                    name='Response', response='FrictionContactConstraint')
     # rootNode.addObject('DefaultCollisionGroupManager', name='GroupManager')
     rootNode.addObject('LocalMinDistance', name='Proximity', alarmDistance=4, contactDistance=1)
 
