@@ -95,61 +95,36 @@ class Finger:
         #  This creates a MechanicalObject, a component holding the degree of freedom of our
         # mechanical modelling. In the case of a cable it is a set of positions specifying
         #  the points where the cable is passing by.
-        # cable1.addObject('MechanicalObject', name='cable1', position=cable1_data)
-        cable2.addObject('MechanicalObject', name='cable2', position=cable2_data)
+        cable1.addObject('MechanicalObject', name='points', position=cable1_data)
+        cable2.addObject('MechanicalObject', name='points', position=cable2_data)
            
         # Create a CableConstraint object with a name.
         # the indices are referring to the MechanicalObject's positions.
         # The last index is where the pullPoint is connected.
-        # cable1.addObject('CableConstraint' if not self.inverseMode else 'CableActuator', template='Vec3', name="acableConstraint",
-        #                 indices=list(range(0, 14)),
-        #                 pullPoint=[-10.392, 0, 6],
-        #                 # maxPositiveDisp=0.1,
-        #                 maxDispVariation=0.05,
-        #                 minForce=0)
+        cable1.addObject('CableConstraint' if not self.inverseMode else 'CableActuator', template='Vec3', name="acableConstraint",
+                        indices=list(range(0, 14)),
+                        pullPoint=[-10.392, 0, 6],
+                        # maxPositiveDisp=0.1,
+                        maxDispVariation=0.05,
+                        minForce=0)
         
         cable2.addObject('CableConstraint' if not self.inverseMode else 'CableActuator', template='Vec3', name="aCableActuator",
                         indices=list(range(0, 14)), #all are 30
                         # indices=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
                         minForce=0,  # Set that the cable can't push
-                        maxPositiveDisp=0.1,
+                        # maxPositiveDisp=0.1,
                         maxDispVariation=0.05,
                         pullPoint=[10.392, 0, 6]
                         #[0, -5, 6]
                         )
 
 
-
-
-        # cable1.addObject('CableConstraint', template='Vec3', name="acableConstraint",
-        #                 indices=list(range(0, 14)),
-        #                 pullPoint=[-10.392, 0, 6],
-        #                 # maxPositiveDisp=0.1,
-        #                 # maxDispVariation=0.05,
-        #                 minForce=0)
-        
-        # cable2.addObject('CableConstraint' , template='Vec3', name="aCableActuator",
-        #                 indices=list(range(0, 14)), #all are 30
-        #                 # indices=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-        #                 minForce=0,  # Set that the cable can't push
-        #                 maxPositiveDisp=0.1,
-        #                 maxDispVariation=0.05,
-        #                 pullPoint=[10.392, 0, 6]
-        #                 #[0, -5, 6]
-        #                 )
-
-
         # This creates a BarycentricMapping. A BarycentricMapping is a key element as it will create a bidirectional link
         #  between the cable's DoFs and the finger's one's so that movements of the cable's DoFs will be mapped
         #  to the finger and vice-versa;
-        # cable1.addObject('BarycentricMapping')
+        cable1.addObject('BarycentricMapping')
         cable2.addObject('BarycentricMapping')
 
-        # cable1.addObject(FingerController(cable1, name="FingerController"))
-        # if not self.inverseMode:
-        #     # This creates a PullingCable component. This component will apply a force to the cable's DoFs
-        #     #  to pull the cable toward the pullPoint.0
-        # cable1.addObject(FingerController("FingerController",cable1))
         
 
     def addVisualModel(self, surfaceMeshFileName, color=[1., 1., 1., 1.]):
